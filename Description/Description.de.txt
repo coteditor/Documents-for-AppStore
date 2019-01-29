@@ -18,6 +18,7 @@ Hauptfunktionen
 • Live-Zählung für Zeichen/Wörter/Zeilen
 • Sorgfältige Handhabung von Dateicodierung und Zeilenenden
 • Automatisch erzeugtes Übersichtsmenü zur schnellen Navigation
+• Bearbeitung mit mehreren Cursors
 • Zeicheninspektor, der das vergrößerte Symbol und Unicode-Informationen zeigt
 • Modus für vertikale Textanordnung
 • Diverse Unicode-Normalisierungen

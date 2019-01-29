@@ -18,6 +18,7 @@ Recursos Principais
 • Contagem de caracteres, palavras e linhas em tempo real;
 • Gerenciamento cuidadoso da codificação de arquivos e finais de linhas;
 • Geração automática de menu de plano para navegação rápida;
+• Múltiplos cursores;
 • Inspetor de caracteres que mostra o glifo ampliado e informações de Unicode;
 • Modo de layout de texto vertical;
 • Várias normalizações de Unicode;

@@ -7,7 +7,7 @@ The application is exactly made for macOS. CotEditor looks and behaves just as m
 
 Quick, Easy, and Powerful
 
-CotEditor launches so quick that you can write your text immediately when you want to. It's perfect for you to write a draft version of your document or a scratch code. The simply organized user interface doesn't disturb your task. However, at the same time, CotEditor is neither a software only for beginners nor a typical minimal “zen-style” editor. It is fully customizable. There are, of course, syntax highlighting feature for various languages, find and replace with the regular expression, auto-indentation, command-line tool, and lots of other deep functions. You can also easily write your own macro in your favorite languages. 
+CotEditor launches so quick that you can write your text immediately when you want to. It's perfect for you to write a draft version of your document or a scratch code. The simply organized user interface doesn't disturb your task. However, at the same time, CotEditor is neither a software only for beginners nor a typical minimal “zen-style” editor. It is fully customizable. There are, of course, syntax highlighting feature for various languages, find and replace with the regular expression, auto-indentation, command-line tool, and lots of other deep functions. You can also easily write your own macro in your favorite languages.
 
 Key Features
 
@@ -18,6 +18,7 @@ Key Features
 • Live character/word/line count
 • Handling file encoding and line endings with care
 • Auto-generated outline menu for fast navigation
+• Multi-cursor editing
 • Character inspector that shows the zoomed glyph and Unicode information
 • Vertical text layout mode
 • Various Unicode normalizations
