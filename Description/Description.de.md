@@ -1,3 +1,19 @@
+
+subtitle
+-----------
+
+Handlicher Klartext-Editor
+
+
+keywords
+-----------
+
+plain-text, plain text, text editor, syntax, coding, markdown, regular expression, klartext
+
+
+description
+-----------
+
 CotEditor ist ein handlicher und eleganter, aber leistungsstarker Texteditor zur Bearbeitung von Klartextdateien wie Webseiten (HTML, CSS), Programmquellcode (Python, Ruby, Perl usw.), strukturierten Texten (Markdown, Textile, TeX usw.) oder jeder anderen Art von Klartext.
 
 

@@ -1,3 +1,19 @@
+
+subtitle
+-----------
+
+Lightweight plain-text editor
+
+
+keywords
+-----------
+
+plain-text, plain text, text editor, syntax, coding, markdown, regular expression
+
+
+description
+-----------
+
 CotEditor; web sayfaları (HTML, CSS), program kaynak kodları (Python, Ruby, Perl, vb.), yapılandırılmış metinler (Markdown, Textile, TeX, vb.) veya diğer herhangi bir düz metin türünü düzenlemek için tasarlanmış hafif, hızlı; ancak güçlü bir metin düzenleyicidir.
 
 

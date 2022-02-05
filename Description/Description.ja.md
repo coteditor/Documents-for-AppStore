@@ -1,3 +1,19 @@
+
+subtitle
+-----------
+
+軽量プレーンテキストエディタ
+
+
+keywords
+-----------
+
+plain-text, plain text, editor, エディタ, プレーンテキスト, テキストエディタ, シンタックス, コーディング, 正規表現
+
+
+description
+-----------
+
 CotEditorは軽快で洗練された、そして高機能なテキストエディタです。Webページ (HTML, CSS) やプログラムソースコード (Python, Ruby, Perl, etc)、構造化文書 (Markdown, Textile, TeX, etc) ほか、装飾情報を含まない「プレーンテキスト」ならなんでも扱うことができます。
 
 

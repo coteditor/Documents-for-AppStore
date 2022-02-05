@@ -1,3 +1,19 @@
+
+subtitle
+-----------
+
+Lightweight plain-text editor
+
+
+keywords
+-----------
+
+plain-text, plain text, text editor, syntax, coding, markdown, regular expression
+
+
+description
+-----------
+
 CotEditor is a light-weight, neat, yet powerful text editor designed for editing plain-text files such as web pages (HTML, CSS), program source codes (Python, Ruby, Perl, etc.), structured texts (Markdown, Textile, TeX, etc.), or any other kind of plain-text.
 
 
