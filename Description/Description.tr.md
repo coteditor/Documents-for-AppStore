@@ -2,7 +2,7 @@
 subtitle
 -----------
 
-Lightweight plain-text editor
+Hafif bir düz metin düzenleyici
 
 
 keywords
