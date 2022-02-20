@@ -2,7 +2,7 @@
 subtitle
 -----------
 
-Hafif bir düz metin düzenleyici
+Hafif bir metin düzenleyici
 
 
 keywords
