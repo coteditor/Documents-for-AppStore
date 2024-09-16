@@ -41,4 +41,8 @@ Ana Özellikler
 • Yarı saydam pencere
 • Komut satırı aracı
 • Betiklerle yönetilebilir
-• ÇJK dilleri dostu
+• JÇK dilleri dostu
+
+
+Hizmet Kullanım Şartları: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Gizlilik Politikası: https://coteditor.com/privacy

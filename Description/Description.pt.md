@@ -41,4 +41,8 @@ Recursos Principais
 • Janela semitransparente;
 • Ferramenta de linha de comando;
 • Use scripts de suas linguagens favoritas;
-• Aceita linguagens JCK.
+• Aceita linguagens CJK.
+
+
+Termos do Serviço: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Política de Privacidade: https://coteditor.com/privacy

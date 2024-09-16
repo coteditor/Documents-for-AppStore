@@ -41,3 +41,7 @@ CotEditor는 매우 빠르게 켜지기 때문에 원하는 즉시 작성할 수
 • 원하는 언어로 매크로 작성
 • 명령어 라인 도구
 • 한중일 언어에 대한 최적의 지원
+
+
+서비스 약관: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+개인정보 취급방침: https://coteditor.com/privacy

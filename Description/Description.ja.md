@@ -44,3 +44,7 @@ CotEditorはあっという間に立ち上がるので、思い立ったその�
 • 多様なUnicode正規化
 • コマンドラインツール
 • AppleScript以外にもPythonやRubyなど複数の言語でマクロが書けるスクリプト機能
+
+
+サービス利用規約: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+プライバシーポリシー: https://coteditor.com/privacy

@@ -37,4 +37,8 @@ Klíčové vlastnosti
 • Poloprůhledné okno
 • Nástroj příkazového řádku
 • Možnost skriptování vaším oblíbeným jazykem
-• Kompatibilní s jazyky JCK
+• Kompatibilní s jazyky CJK
+
+
+Podmínky služby: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Ochrana osobních údajů: https://coteditor.com/privacy

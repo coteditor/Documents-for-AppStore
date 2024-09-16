@@ -41,4 +41,8 @@ Hauptfunktionen
 • Halbtransparentes Fenster
 • Kommandozeilenwerkzeug
 • Per Skript in Ihrer bevorzugten Sprache steuerbar
-• Freundlich gegenüber JCK-Sprachen
+• Freundlich gegenüber CJK-Sprachen
+
+
+Nutzungsbedingungen: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Datenschutzvereinbarung: https://coteditor.com/privacy

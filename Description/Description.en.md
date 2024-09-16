@@ -41,4 +41,7 @@ Key Features
 • Semi-transparent window
 • Command-line tool
 • Scriptable with your favorite language
-• JCK-languages friendly
+• CJK-languages friendly
+
+Terms of Service: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Privacy Policy: https://coteditor.com/privacy

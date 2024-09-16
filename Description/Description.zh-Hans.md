@@ -41,4 +41,8 @@ CotEditor 启动速度如此之快，您可以在需要时立即编写文本。�
 • 半透明窗口
 • 命令行工具
 • 可根据您的喜欢的语言编写脚本
-• 友好支持JCK-语言
+• 友好支持CJK-语言
+
+
+服务条款: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+隐私政策: https://coteditor.com/privacy

@@ -41,4 +41,8 @@ Kluczowe cechy
 • Możliwość skryptowania w Twoim ulubionym języku
 • Tryb pionowego układu tekstu
 • Różne normalizacje Unikodu
-• Przyjazny językom JCK (japoński, chiński, koreański)
+• Przyjazny językom CJK (chiński, japoński, koreański)
+
+
+Warunki korzystania z usługi: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Ochrona prywatności: https://coteditor.com/privacy
