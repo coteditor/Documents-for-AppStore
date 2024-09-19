@@ -14,7 +14,7 @@ zwykły tekst, tekst zwykły, edytor tekstu, składnia, kodowanie, markdown, wyr
 description
 -----------
 
-CotEditor to lekki, przejrzysty, a jednocześnie potężny edytor tekstu przeznaczony do edycji plików tekstowych, takich jak strony internetowe (HTML, CSS), kod źródłowy programów (Python, Ruby, Perl itp.), ustrukturyzowany tekst (Markdown, Textile , TeX itp.) lub dowolny inny zwykły tekst.
+CotEditor to lekki, przejrzysty, a jednocześnie potężny edytor tekstu przeznaczony do edycji plików tekstowych, takich jak strony internetowe (HTML, CSS), kod źródłowy programów (Python, Ruby, Perl itp.), ustrukturyzowany tekst (Markdown, Textile, TeX itp.) lub dowolny inny zwykły tekst.
 
 
 Tylko na Maca
@@ -45,4 +45,4 @@ Kluczowe cechy
 
 
 Warunki korzystania z usługi: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Ochrona prywatności: https://coteditor.com/privacy
+Zasady ochrony prywatności: https://coteditor.com/privacy
