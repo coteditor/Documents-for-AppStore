@@ -14,34 +14,38 @@ plain-text, plain text, text editor, syntax, coding, markdown, regular expressio
 description
 -----------
 
-CotEditor is a light-weight, neat, yet powerful text editor designed for editing plain-text files such as web pages (HTML, CSS), program source codes (Python, Ruby, Perl, etc.), structured texts (Markdown, Textile, TeX, etc.), or any other kind of plain-text.
+CotEditor is a lightweight plain-text editor for source code, notes, Markdown, web content, and more. Its clean, neat interface makes everyday editing simple and comfortable, while powerful tools support more advanced work when you need them.
 
 
-Just For Mac
+Made for Mac
 
-The application is exactly made for macOS. CotEditor looks and behaves just as macOS applications should. It means, you already know how to use it even on the first launch. There are no complicated setting files that require geek knowledge so that you can access all your settings including syntax definitions and themes from a standard settings window.
+CotEditor is built exclusively for macOS and designed to feel at home from the start. It follows familiar system conventions, integrates seamlessly with features such as Dark Mode, Versions, iCloud, and VoiceOver, and keeps settings in a standard settings window, right where Mac users expect them.
 
-Quick, Easy, and Powerful
+Fast, Focused, and Ready for Real Work
 
-CotEditor launches so quickly that you can write your text immediately when you want to. It's perfect for you to write a draft version of your document or a scratch code. The simply organized user interface doesn't disturb your task. However, at the same time, CotEditor is neither software only for beginners nor a typical minimal “zen-style” editor. It is fully customizable. There are, of course, syntax highlighting for various languages, find and replace with the regular expression, auto-indentation, command-line tool, and lots of other deep functions. You can also easily write your own macro in your favorite languages.
+CotEditor launches quickly, and its simple, well-organized interface helps you stay focused on your work. Built-in syntax highlighting for many popular languages and an outline menu based on syntax help you grasp the structure of your documents at a glance. When your work calls for more, CotEditor is ready with powerful find and replace, precise tools for editing text, scripting support, and the flexibility to tailor the details to your workflow.
+
+Thoughtful About Text
+
+CotEditor pays attention to the details that make plain-text editing reliable, from text encodings and line endings to Unicode normalization and diverse writing systems. It helps you see what’s really in your document by revealing invisible characters, warning about mixed line endings or characters that cannot be saved in the chosen encoding, and offering detailed character inspection. It also makes CotEditor comfortable across different writing systems and text conventions.
 
 Key Features
 
-• Syntax highlighting including more than 50 preset languages
-• Powerful find and replace with the regular expression
-• Auto-backup with/without overwriting actual document files
-• Line numbers view
-• Live character/word/line count
-• Handling file encoding and line endings with care
-• Auto-generated outline menu for fast navigation
+• Syntax highlighting for more than 70 preset languages
+• Powerful find and replace with regular expressions
+• Live character, word, and line counts
+• Auto Save with an option to avoid overwriting the original file
+• Careful handling of text encodings and line endings
+• Outline menu based on syntax
 • Multi-cursor editing
-• Character inspector that shows the zoomed glyph and Unicode information
-• Vertical text layout mode
+• Sidebar folder navigation
+• Character inspector with enlarged glyph and Unicode information
+• Support for diverse writing styles, including CJK text, vertical text layout, and right-to-left text
 • Various Unicode normalizations
-• Semi-transparent window
 • Command-line tool
-• Scriptable with your favorite language
-• CJK-languages friendly
+• Scriptable in your favorite language
+
+All features in CotEditor are available for free. In-app purchases are optional and support the project.
 
 Terms of Service: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Privacy Policy: https://coteditor.com/privacy
