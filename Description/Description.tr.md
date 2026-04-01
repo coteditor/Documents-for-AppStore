@@ -1,48 +1,51 @@
-
-subtitle
+subtitle (max. 30 characters)
 -----------
 
-Hafif düz metin düzenleyici
-
+Hafif ve yalın düz metin düzenleyicisi
 
 keywords
 -----------
 
-plain-text, plain text, text editor, syntax, coding, markdown, regular expression
-
+düz metin, plain text, metin düzenleyicisi, sözdizim, kodlama, markdown, düzenli ifade
 
 description
 -----------
+ 
+CotEditor; kaynak kodu, notlar, Markdown, web içeriği ve daha fazlası için hafif ve yalın bir düz metin düzenleyicisidir. Temiz ve düzenli arayüzü sayesinde günlük düzenleme işleri basit ve konforlu hale gelirken, güçlü araçları da gereksinim duyduğunuzda daha ileri düzey çalışmalar için destek sağlar.
 
-CotEditor; web sayfaları (HTML, CSS), program kaynak kodları (Python, Ruby, Perl, vb.), yapılandırılmış metinler (Markdown, Textile, TeX, vb.) veya diğer herhangi bir düz metin türünü düzenlemek için tasarlanmış hafif, hızlı; ancak güçlü bir metin düzenleyicidir.
+
+Mac için yapılmış
+
+CotEditor, yalnızca macOS için geliştirilmiştir ve baştan itibaren Mac’te evinizdeymiş gibi hissettirecek şekilde tasarlanmıştır. Mac’in alışıldık sistem kurallarına uyar, Koyu Mod, Sürümler, iCloud ve VoiceOver gibi özelliklerle sorunsuz tümleşir. Ayarları da Mac kullanıcılarının beklediği standart Ayarlar penceresinde tutar.
 
 
-Yalnızca Mac İçin
+Hızlı, odaklı ve gerçek işler için hazır
 
-Uygulama tam olarak macOS için yapılmıştır. CotEditor, tıpkı macOS uygulamalarının olması gerektiği gibi görünür ve davranır. Bu, ilk çalıştırmada bile nasıl kullanılacağını zaten bildiğiniz anlamına gelir. Standart tercihler penceresinden sözdizim tanımları ve temalar dahil tüm ayarlarınıza erişebilmeniz için geek bilgisi gerektiren karmaşık yapılandırma dosyaları yoktur.
+CotEditor hızlı bir şekilde açılır ve basit, iyi organize edilmiş arayüzü sayesinde işinize odaklanmanızı sağlar. Popüler birçok programlama dili için yerleşik sözdizim vurgulama ve sözdizime dayalı ana hat menüsü, belgelerinizin yapısını bir bakışta kavramanıza yardımcı olur. Daha fazla güce gereksiniminiz olduğunda CotEditor, güçlü bul ve değiştir özelliği, hassas metin düzenleme araçları, betik yazımı desteği ve iş akışınıza göre ayrıntıları özelleştirme esnekliğiyle hazırdır.
 
-Hızlı, Kolay ve Güçlü
 
-CotEditor o kadar hızlı açılır ki, açtığınız gibi metninizi hemen yazmaya başlayabilirsiniz. Belgenizin taslak bir sürümünü yazmanız veya ön karalamasını yapmanız için mükemmeldir. Yalınca organize edilmiş kullanıcı arayüzü sizi rahatsız etmez. Ancak aynı zamanda, CotEditor ne yalnızca yeni başlayanlar için bir yazılımdır ne de tipik bir minimal “zen tarzı” düzenleyicidir; tamamen isteklerinize göre özelleştirilebilir. Elbette, çeşitli diller için sözdizim vurgulama özelliği, düzenli ifade kullanabileceğiniz bul ve değiştir, otomatik girintileme, komut satırı aracı ve diğer birçok ayrıntılı işlev mevcuttur. Ayrıca kendi makronuzu en sevdiğiniz dillerde kolayca yazabilirsiniz.
+Metninize özen gösterir
 
-Ana Özellikler
+CotEditor, düz metin düzenlemeyi güvenilir kılan ayrıntıları özen gösterir: Metin kodlamaları, satır sonları, Unicode olağanlaştırması ve farklı yazı sistemleri gibi konularda dikkatli davranır. Belgenizde gerçekten ne olduğunu görmenizi sağlar; görünmez karakterleri gösterir, karışık satır sonları veya seçilen kodlamada kaydedilemeyen karakterler konusunda uyarı verir ve ayrıntılı karakter inceleme olanağı sunar. Ayrıca farklı yazı sistemleri ve metin kuralları arasında rahat kullanım sağlar.
 
-• 50'den fazla önceden ayarlanmış dili içeren sözdizim vurgulama
-• Düzenli ifade kullanabileceğiniz güçlü bul ve değiştir
-• Belge dosyalarının üzerine yazarak/yazmadan otomatik yedekleme
-• Satır numaraları gösterimi
-• Canlı karakter/sözcük/satır sayımı
-• Dosya kodlamasını ve satır sonlarını dikkatlice kotarma
-• Hızlı gezinme için kendiliğinden oluşturulan anahat menüsü
-• Çoklu imleçli düzenleme
-• Seçili karakterin glif ve Unicode bilgilerini gösteren karakter denetçisi
-• Dikey metin yerleşimi kipi
+
+Öne çıkan özellikler
+
+• 70’ten fazla hazır dil için sözdizim vurgulama
+• Düzenli ifadelerle güçlü bul ve değiştir özelliği
+• Canlı karakter, sözcük ve satır sayacı
+• Otomatik Kaydetme ve özgün dosyanın üzerine yazmama seçeneği
+• Metin kodlamaları ve satır sonlarına özenli yaklaşım
+• Sözdizime dayalı ana hat menüsü
+• Çok imleçli düzenleme
+• Kenar çubuğu ile klasörlerde dolaşım
+• Büyütülmüş glif ve Unicode bilgisiyle karakter inceleyici
+• ÇJK metin, dikey metin düzeni ve sağdan sola yazı gibi çeşitli yazı stillerini destekleme
 • Çeşitli Unicode olağanlaştırmaları
-• Yarı saydam pencere
 • Komut satırı aracı
-• Betiklerle yönetilebilir
-• JÇK dilleri dostu
+• Favori programlama dilinizle betik yazabilme
 
+CotEditor’daki tüm özellikler ücretsiz olarak sunulmaktadır. Uygulama içi satın almalar isteğe bağlıdır ve projeye destek sağlar.
 
-Hizmet Kullanım Şartları: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Kullanım Şartları: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Gizlilik Politikası: https://coteditor.com/privacy
