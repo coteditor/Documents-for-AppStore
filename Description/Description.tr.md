@@ -2,7 +2,7 @@
 subtitle (max. 30 characters)
 -----------
 
-Hafif ve yalın düz metin düzenleyicisi
+Hafif düz metin düzenleyicisi
 
 keywords
 -----------
