@@ -1,4 +1,5 @@
-subtitle
+
+subtitle (max. 30 characters)
 -----------
 
 Lehký editor prostého textu

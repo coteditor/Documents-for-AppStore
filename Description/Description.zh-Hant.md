@@ -1,4 +1,5 @@
-subtitle
+
+subtitle (max. 30 characters)
 -----------
 
 輕量級純文字編輯器

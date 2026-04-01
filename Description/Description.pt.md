@@ -1,5 +1,5 @@
 
-subtitle
+subtitle (max. 30 characters)
 -----------
 
 Lightweight plain-text editor

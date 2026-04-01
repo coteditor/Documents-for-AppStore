@@ -1,5 +1,5 @@
 
-subtitle
+subtitle (max. 30 characters)
 -----------
 
 Editor leggero di solo testo

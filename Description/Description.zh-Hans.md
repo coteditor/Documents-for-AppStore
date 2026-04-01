@@ -1,4 +1,5 @@
-subtitle
+
+subtitle (max. 30 characters)
 -----------
 
 简洁趁手的文本编辑器

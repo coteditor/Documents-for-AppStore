@@ -1,4 +1,5 @@
-subtitle
+
+subtitle (max. 30 characters)
 -----------
 
 Лек редактор за обикновен текст
