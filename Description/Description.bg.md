@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 Лек редактор за обикновен текст
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 обикновен текст, plain text, текстов редактор, синтаксис, програмиране, markdown, регулярен израз

@@ -4,10 +4,12 @@ subtitle (max. 30 characters)
 
 Hafif düz metin düzenleyicisi
 
-keywords
+
+keywords (max. 100 characters)
 -----------
 
 düz metin, plain text, metin düzenleyicisi, sözdizim, kodlama, markdown, düzenli ifade
+
 
 description
 -----------

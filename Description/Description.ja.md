@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 軽量プレーンテキストエディタ
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 plain-text, plain text, editor, エディタ, プレーンテキスト, テキストエディタ, シンタックス, コーディング, 正規表現

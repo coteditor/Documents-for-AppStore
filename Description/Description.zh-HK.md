@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 輕量化純文字編輯器
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 純文字, 文字編輯, 語法, 程式碼, markdown, 常規表示式

@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 Editor de texto sin formato
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 plain-text, plain text, text editor, syntax, coding, markdown, regular expression

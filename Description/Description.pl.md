@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 Lekki edytor zwykłego tekstu
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 zwykły tekst, tekst zwykły, edytor tekstu, składnia, kodowanie, markdown, wyrażenie regularne

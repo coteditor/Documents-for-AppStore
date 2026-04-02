@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 简洁趁手的文本编辑器
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 文本编辑器, 代码编辑, 笔记, Markdown, 正则表达式, 编程开发, 纯文本

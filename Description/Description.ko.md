@@ -5,7 +5,7 @@ subtitle (max. 30 characters)
 가벼운 텍스트 편집기
 
 
-keywords
+keywords (max. 100 characters)
 -----------
 
 텍스트 편집기, 일반 텍스트, 텍스트, 메모장, 코딩, 마크다운, 정규식, 정규표현식, plain text, syntax, markdown, regular expression
