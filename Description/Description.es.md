@@ -2,7 +2,7 @@
 subtitle (max. 30 characters)
 -----------
 
-Editor de texto sin formato ligero
+Editor de texto sin formato
 
 
 keywords
@@ -14,31 +14,38 @@ plain-text, plain text, text editor, syntax, coding, markdown, regular expressio
 description
 -----------
 
-CotEditor es un editor de texto ligero, ordenado y potente, diseñado para editar archivos de texto sin formato como páginas web (HTML, CSS), códigos fuente de programas (Python, Ruby, Perl, etc.), textos estructurados (Markdown, Textile, TeX, etc.) o cualquier otro tipo de texto sin formato.
+CotEditor es un editor ligero de texto sin formato para código fuente, notas, Markdown, contenido web y mucho más. Su interfaz limpia y ordenada hace que la edición diaria sea simple y cómoda, mientras que sus potentes herramientas respaldan tareas más avanzadas cuando las necesitas.
 
 
-Solo para Mac
+Hecho para Mac
 
-La aplicación está hecha exactamente para macOS. CotEditor se ve y se comporta como deberían hacerlo las aplicaciones de macOS. Significa que ya sabes cómo usarlo incluso en el primer lanzamiento. No hay archivos de configuración complejos que requieran conocimiento especializado para que pueda acceder a todos sus ajustes, incluidas las definiciones de sintaxis y los temas, desde una ventana de preferencias estándar.
+CotEditor está creado exclusivamente para macOS y diseñado para resultar familiar desde el primer momento. Sigue las convenciones habituales del sistema, se integra perfectamente con funciones como Modo Oscuro, Versiones, iCloud y VoiceOver, y mantiene los ajustes en una ventana de configuración estándar, justo donde los usuarios de Mac esperan encontrarlos.
 
-Rápido, fácil y potente
+Rápido, centrado y listo para el trabajo real
 
-CotEditor se abre tan rápido que puedes escribir, si lo deseas, tu texto inmediatamente. Es perfecto para que escribas un borrador de tu documento o el código de un programa. La interfaz de usuario, organizada de forma simple, no perturbará tu tarea. Sin embargo, al mismo tiempo, CotEditor no es un software solo para principiantes, ni un típico editor mínimo del "estilo todo a cien". Es totalmente personalizable. Hay, por supuesto, una función de resaltado de sintaxis para varios lenguajes, encontrar y reemplazar con expresiones regulares, la sangría automática, la herramienta de línea de comandos (cot) y muchas otras funciones profundas. También puedes escribir fácilmente tu propia macro en tus idiomas favoritos.
+CotEditor se inicia rápido, y su interfaz simple y bien organizada te ayuda a mantenerte concentrado en tu trabajo. El resaltado de sintaxis integrado para muchos lenguajes populares y un menú de esquema basado en la sintaxis te ayudan a captar la estructura de tus documentos de un vistazo. Cuando tu trabajo exige más, CotEditor está listo con una potente función de buscar y reemplazar, herramientas precisas para editar texto, compatibilidad con scripts y la flexibilidad necesaria para adaptar los detalles a tu flujo de trabajo.
+
+Cuida el texto
+
+CotEditor cuida los detalles que hacen fiable la edición de texto sin formato, desde la codificación de texto y los finales de línea hasta la normalización Unicode y diversos sistemas de escritura. Te ayuda a ver qué hay realmente en tu documento mostrando caracteres invisibles, advirtiéndote sobre finales de línea mezclados o caracteres que no pueden guardarse con la codificación de texto elegida, y ofreciéndote una inspección detallada de caracteres. Esa misma atención también hace que CotEditor sea cómodo de usar con distintos sistemas de escritura y convenciones textuales.
 
 Características clave
 
-• Resaltado de sintaxis, incluyendo más de 50 lenguajes preestablecidos
-• Potente función buscar y reemplazar con expresiones regulares
-• Copia de seguridad automática sin sobrescribir archivos de documentos reales
-• Visualizar números de línea
-• Recuento de caracteres/palabras/líneas actualizado en el momento.
-• Manejo de la codificación de archivos y los finales de línea muy cuidadoso
-• Menú de esquema generado automáticamente para una navegación rápida
+• Resaltado de sintaxis para más de 70 lenguajes predefinidos
+• Potente función de buscar y reemplazar con expresiones regulares
+• Recuento en tiempo real de caracteres, palabras y líneas
+• Auto Save con una opción para evitar sobrescribir el archivo original
+• Manejo cuidadoso de la codificación de texto y los finales de línea
+• Menú de esquema basado en la sintaxis
 • Edición multicursor
-• Inspector de caracteres que muestra el glifo ampliado y la información Unicode
-• Modo de diseño de texto vertical
-• Varias normalizaciones de Unicode
-• Ventana semitransparente
+• Navegación por carpetas en la barra lateral
+• Inspector de caracteres con glifo ampliado e información Unicode
+• Compatibilidad con estilos de escritura diversos, incluidos texto CJK, disposición vertical y texto de derecha a izquierda
+• Varias normalizaciones Unicode
 • Herramienta de línea de comandos
-• Scriptable con tu lenguaje favorito
-• Amigable con los idiomas JCK
+• Compatible con scripts en tu lenguaje favorito
+
+Todas las funciones de CotEditor están disponibles gratis. Las compras integradas son opcionales y sirven para apoyar el proyecto.
+
+Condiciones del servicio: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Política de privacidad: https://coteditor.com/privacy
