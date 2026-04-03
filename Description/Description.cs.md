@@ -8,40 +8,44 @@ Lehký editor prostého textu
 keywords (max. 100 characters)
 -----------
 
-plain-text, plain text, text editor, syntax, coding, markdown, regular expression
+prostý text, textový editor, syntaxe, programování, markdown, regulární výraz, regex
 
 
 description
 -----------
 
-CotEditor je lehký, přehledný a přitom výkonný textový editor určený k úpravám souborů ve formátu prostého textu, jako jsou webové stránky (HTML, CSS), zdrojové kódy programů (Python, Ruby, Perl atd.), strukturované texty (Markdown, Textile, TeX atd.) nebo jakýkoli jiný druh prostého textu.
+CotEditor je lehký editor prostého textu určený pro zdrojový kód, poznámky, Markdown, webový obsah a další. Jeho čisté a přehledné rozhraní usnadňuje každodenní psaní a úpravy, zatímco výkonné nástroje vám umožní snadno zvládnout i složitější úkoly.
 
-Jen pro Mac
 
-CotEditor je cíleně vytvořen pro systém macOS. CotEditor vypadá a chová se přesně tak, jak by aplikace pro macOS měly vypadat. To znamená, že už při prvním spuštění víte, jak CotEditor používat. Neexistují žádné složité konfigurační soubory, které by vyžadovaly znalosti počítačového experta, ke všem předvolbám, včetně definic syntaxe a motivů, máte přístup ze standardního okna nastavení.
+Vytvořeno pro Mac
 
-Rychlý, snadný a výkonný
+CotEditor je vytvořen výhradně pro macOS a navržen tak, aby se v něm uživatel cítil jako doma. Dodržuje známé systémové konvence, hladce se integruje s funkcemi jako tmavý režim (Dark Mode), Verze (Versions), iCloud a VoiceOver. Nastavení jsou dostupná ve standardním okně Nastavení, přesně tam, kde je uživatel Macu očekává.
 
-CotEditor se spouští tak rychle, že můžete psát text kdykoliv se vám zachce. Je ideální pro psaní pracovních verzí dokumentů nebo pro rychlé psaní základního kódu. Jednoduše uspořádané uživatelské rozhraní nijak neruší při práci. CotEditor je více než jen software pro začátečníky a více než jen typický minimalistický editor „zenového stylu“. Je plně přizpůsobitelný. Samozřejmostí je zvýrazňování syntaxe pro různé jazyky, vyhledávání a nahrazování pomocí regulárních výrazů, automatické odsazování, nástroj příkazového řádku a mnoho dalších pokročilých funkcí. Ve svých oblíbených jazycích můžete také snadno psát vlastní makra.
+Rychlý, soustředěný a připravený na skutečnou práci
 
-Klíčové vlastnosti
+CotEditor se spouští rychle a jeho jednoduché, přehledné rozhraní vám pomáhá soustředit se na práci. Vestavěné zvýrazňování syntaxe pro mnoho populárních jazyků a nabídka osnovy založená na syntaxi vám umožní okamžitě pochopit strukturu dokumentu. A když vaše práce vyžaduje víc, CotEditor je vždy připraven — s výkonným hledáním a nahrazováním, přesnými nástroji pro úpravy textu, podporou skriptování a flexibilitou, která vám umožní přizpůsobit si detaily podle vlastního pracovního postupu.
 
-• Zvýrazňování syntaxe včetně více než 50 přednastavených jazyků
-• Výkonné hledání a nahrazování pomocí regulárních výrazů
-• Automatické zálohování s/bez přepsání aktuálních souborů dokumentů
-• Zobrazování čísel řádků
-• Počítání znaků, slov, řádků v reálném čase
-• Pečlivé zpracování kódování souborů a ukončení řádků
-• Automaticky generovaná nabídka osnovy pro rychlou navigaci
-• Editace pomocí více kurzorů
-• Inspektor znaků, který zobrazuje rozšířené informace o glyfech a Unicode
-• Režim vertikálního rozložení textu
+Promyšlený přístup k textu
+
+CotEditor věnuje pozornost detailům, které zajišťují spolehlivou úpravu prostého textu – od kódování textu a konců řádků až po normalizaci Unicode a podporu různých způsobů psaní. Pomáhá vám vidět, co se ve vašem dokumentu skutečně nachází, tím, že zobrazuje neviditelné znaky, upozorňuje na smíšené konce řádků nebo znaky, které nelze uložit ve zvoleném kódování, a nabízí podrobnou inspekci znaků. Díky tomu je práce napříč různými způsoby psaní a typografickými konvencemi pohodlná a přehledná.
+
+Hlavní funkce
+
+• Zvýrazňování syntaxe pro více než 70 přednastavených jazyků
+• Výkonné hledání a nahrazování s podporou regulárních výrazů
+• Počítání znaků, slov a řádků v reálném čase
+• Automatické ukládání s možností nepřepisovat původní soubor
+• Pečlivé zpracování kódování textu a konců řádků
+• Nabídka osnovy založená na syntaxi
+• Úpravy s více kurzory
+• Navigace ve složkách v bočním panelu
+• Inspektor znaků se zvětšeným glyfem a informacemi o Unicode
+• Podpora různých způsobů psaní, včetně textu CJK, vertikální sazby a textu psaného zprava doleva
 • Různé normalizace Unicode
-• Poloprůhledné okno
 • Nástroj příkazového řádku
-• Možnost skriptování vaším oblíbeným jazykem
-• Kompatibilní s jazyky CJK
+• Možnost skriptování ve vašem oblíbeném programovacím jazyce
 
+Všechny funkce CotEditoru jsou dostupné zdarma. Nákupy v aplikaci jsou volitelné a slouží k podpoře projektu.
 
 Podmínky služby: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
-Ochrana osobních údajů: https://coteditor.com/privacy
+Zásady ochrany osobních údajů: https://coteditor.com/privacy
