@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+                     "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+	         xmlns:xlink="http://www.w3.org/1999/xlink"
+	viewBox="0 0 64 64">
+
+<title>&lt;svg/&gt; file</title>
+
+<style><![CDATA[
+	#file   { stroke:hsl(245,28%,40%); fill:none;
+	          stroke-linecap:round; stroke-linejoin:round }
+	.white  { fill:white }
+]]></style>
+
+<defs>
+	<clipPath id="fileMask">
+		<use xlink:href="#fileShape"/>
+	</clipPath>
+</defs>
+
+<g transform="translate(9,4)">
+	<g id="svgLogo" clip-path="url(#fileMask)">
+		<g transform="translate(36,48)">
+			<g stroke-width="7.6" stroke="hsl(245,28%,40%)">
+				<g id="svgstar" class="white">
+					<g id="svgbar">
+						<rect width="6.4" height="40" x="-3.2" y="-20"/>
+						<circle r="4.5" cy="-20"/>
+						<circle r="4.5" cy= "20"/>
+					</g>
+					<use xlink:href="#svgbar" transform="rotate(45)"/>
+					<use xlink:href="#svgbar" transform="rotate(90)"/>
+					<use xlink:href="#svgbar" transform="rotate(135)"/>
+				</g>
+			</g>
+			<use xlink:href="#svgstar"/>
+		</g>
+	</g>
+	
+	<g id="file">
+		<polyline stroke-width="4" points="0,0 0,56 46,56 46,16 30,0 0,0" id="fileShape"/>
+		<polyline stroke-width="2" points="0,0 0,16 16,16" transform="translate(30)"/>
+	</g>
+</g>
+</svg>

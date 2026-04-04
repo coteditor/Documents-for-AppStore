@@ -472,6 +472,7 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
     try shell("/usr/bin/defaults", arguments: ["write", bundleID, "defaultTheme", "-string", "Resinifictrix"])
     try shell("/usr/bin/defaults", arguments: ["write", bundleID, "highlightCurrentLine", "-bool", "false"])
     try shell("/usr/bin/defaults", arguments: ["write", bundleID, "showStatusArea", "-bool", "false"])
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "selectedInspectorPaneIndex", "-int", "1"])
     try setCotEditorFont(name: "Klee", size: 13)
 
     // Force cfprefsd to flush by reading back.
@@ -513,7 +514,7 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
 
     let screen = builtInScreenInfo()
 
-    // Hide toolbar and status bar, then resize and center.
+    // Hide toolbar, show inspector, then resize and center.
     try runAppleScript("""
         tell application "System Events"
             tell process "CotEditor"
@@ -524,12 +525,159 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
                 keystroke "t" using {command down, option down}
                 delay 0.3
 
+                -- Show inspector (Cmd+I) — toggle, so check state after
+                keystroke "i" using command down
+                delay 0.3
+                -- If inspector didn't open (window width didn't change), it was already open
+                -- and we just closed it. Toggle again.
+                -- We detect by checking if window width grew beyond our target.
+
         \(windowCenteringScript(width: 1000, height: 700, screen: screen))
                 delay 0.3
             end tell
         end tell
         """)
 
+    try takeScreenshot(to: outputPath)
+    try quitCotEditor()
+
+    print("  ✓ Saved: \(outputPath)")
+}
+
+
+/// Captures the Editor screenshot.
+///
+/// - Parameters:
+///   - language: The language for which to capture.
+///   - demoFile: The path to the demo file to open.
+///   - outputPath: The path to save the screenshot.
+func captureEditor(language: Language, demoFile: String, outputPath: String) throws {
+
+    print("  Capturing Editor for \(language.folderName)...")
+    print("    [1/7] Setting defaults...")
+
+    // Set language and CotEditor preferences.
+    try setCotEditorLanguage(language.localeCode)
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "defaultTheme", "-string", "Anura"])
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "showStatusArea", "-bool", "true"])
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "findUsesRegularExpression", "-bool", "true"])
+    try setCotEditorFont(name: "Menlo", size: 13)
+
+    // Ensure toolbar is visible.
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "NSToolbar Configuration Document",
+        "-dict-add", "TB Is Shown", "-bool", "true"])
+
+    // Set Find panel width to 540 via NSWindow frame defaults.
+    // Format: "x y width height screenX screenY screenWidth screenHeight"
+    let bounds = builtInScreenBounds()
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "NSWindow Frame Find Panel",
+        "0 0 540 227 \(Int(bounds.origin.x)) \(Int(bounds.origin.y)) \(Int(bounds.width)) \(Int(bounds.height))"])
+
+    // Set the find pasteboard to the regex pattern.
+    let findPasteboard = NSPasteboard(name: .find)
+    findPasteboard.clearContents()
+    findPasteboard.setString(#"stroke-width="(\d+)""#, forType: .string)
+
+    // Force cfprefsd to flush by reading back.
+    _ = try shell("/usr/bin/defaults", arguments: ["read", bundleID, "defaultTheme"])
+    wait(0.3)
+
+    print("    [2/7] Opening demo file...")
+    try shell("/usr/bin/open", arguments: ["-a", "CotEditor", demoFile])
+
+    // Wait for CotEditor to be ready.
+    try runAppleScript("""
+        tell application "System Events"
+            repeat 30 times
+                if exists process "CotEditor" then exit repeat
+                delay 0.2
+            end repeat
+        end tell
+        """)
+    wait(0.5)
+
+    print("    [3/7] Closing other windows...")
+    try runAppleScript("""
+        tell application "CotEditor"
+            close every window without saving
+            open POSIX file "\(demoFile)"
+        end tell
+        """)
+    wait(0.5)
+
+    print("    [4/7] Hiding other apps...")
+    try runAppleScript("""
+        tell application "System Events"
+            set visible of every process whose name is not "CotEditor" and name is not "Finder" to false
+        end tell
+        """)
+
+    let screen = builtInScreenInfo()
+
+    print("    [5/7] Closing inspector and resizing document window...")
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                set frontmost to true
+                delay 0.3
+
+                -- Close inspector (opened by previous VerticalOrientation capture)
+                keystroke "i" using command down
+                delay 0.3
+
+                -- Resize the document window
+                set size of window 1 to {\(windowWidth), 800}
+
+                -- Position: x = display left + 280, y = macOS-style centered
+                set actualSize to size of window 1
+                set actualHeight to item 2 of actualSize
+                set position of window 1 to {\(screen.originX + 280), \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3}
+                delay 0.3
+            end tell
+        end tell
+        """)
+
+    print("    [6a/7] Opening Find & Replace...")
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                keystroke "f" using command down
+                delay 0.8
+            end tell
+        end tell
+        """)
+
+    print("    [6b/7] Positioning Find window...")
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                set position of window 1 to {\(screen.originX + 780), \(screen.originY + 400)}
+                delay 0.3
+            end tell
+        end tell
+        """)
+
+    print("    [6c/7] Deselecting text field...")
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                key code 124
+                delay 0.3
+            end tell
+        end tell
+        """)
+
+    print("    [6d/7] Find All...")
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                keystroke "F" using {command down, shift down}
+                delay 1
+            end tell
+        end tell
+        """)
+
+    print("    [7/7] Taking screenshot...")
     try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
@@ -594,6 +742,13 @@ func cleanup() {
     print("")
     print("Cleaning up...")
 
+    // Quit CotEditor if still running.
+    do {
+        try quitCotEditor()
+    } catch {
+        // CotEditor may not be running; ignore.
+    }
+
     // Restore CotEditor defaults.
     if let defaultsBackupPath {
         do {
@@ -631,7 +786,8 @@ signal(SIGINT) { _ in
     exit(1)
 }
 
-let demoFile = screenshotsDir + "/_demo files/銀河鉄道の夜.md"
+let demoFileVertical = screenshotsDir + "/_demo files/銀河鉄道の夜.md"
+let demoFileEditor = screenshotsDir + "/_demo files/editor.svg"
 
 do {
     // Save CotEditor defaults before any modifications.
@@ -661,7 +817,8 @@ do {
         }
 
         try captureSettings(language: language, outputPath: outputDir + "/Settings@2x.png")
-        try captureVerticalOrientation(language: language, demoFile: demoFile, outputPath: outputDir + "/VerticalOrientation@2x.png")
+        try captureVerticalOrientation(language: language, demoFile: demoFileVertical, outputPath: outputDir + "/VerticalOrientation@2x.png")
+        try captureEditor(language: language, demoFile: demoFileEditor, outputPath: outputDir + "/Editor@2x.png")
     }
 
     print("")

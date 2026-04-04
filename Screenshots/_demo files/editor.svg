@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+                     "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+
+<title>besides editor</title>
+
+<style><![CDATA[
+	#editor,
+	#viewer  { stroke-linecap:round; stroke-linejoin:round;
+	           stroke:hsl(245,28%,40%); fill:  none }
+	.fill    { fill:  hsl(245,28%,40%); stroke:none }
+	.shape   { fill:white; stroke:none }
+	#text    { stroke-width:1 }
+]]></style>
+
+<defs>
+	<clipPath id="editorClip">
+		<rect width="64" height="20"/>
+		<rect width="26" height="64"/>
+		<rect width="64" height="64" y="48"/>
+	</clipPath>
+</defs>
+
+<g id="editor" transform="translate(0,2)" clip-path="url(#editorClip)">
+	<rect stroke-width="3" width="42" height="52" rx="1" x="2.5" y="2.5"/>
+	<line stroke-width="2" x1="2" x2="42" y1="10" y2="10"/>
+
+	<g id="text" transform="translate(9,16.5)" opacity="0.67">
+		<line x2="26"/>
+		<line x2="12" transform="translate(4, 4)"/>
+		<line x2="12" transform="translate(4, 8)"/>
+		<line x2="12" transform="translate(4,12)"/>
+		<line x2= "6" transform="translate(0,16)"/>
+		<line x2="16" transform="translate(0,24)"/>
+		<line x2="12" transform="translate(4,28)"/>
+		<line x2= "8" transform="translate(0,32)"/>
+	</g>
+</g>
+
+<g id="viewer" transform="translate(28,24)">
+	<rect width="34" height="22" y="6" opacity="0.5" class="fill"/>
+	<rect stroke-width="4" width="34" height="26" rx="1.5"/>
+	<line stroke-width="2" x2="34" y1="7" y2="7"/>
+	<circle fill="white" r="5" cx="14" cy="16" class="shape" opacity="0.67"/>
+</g>
+</svg>
