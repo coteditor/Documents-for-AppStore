@@ -114,7 +114,7 @@ func wait(_ seconds: Double) {
 ///   - message: The notification message.
 func sendNotification(title: String, message: String) {
 
-    try? shell("/usr/bin/osascript", arguments: ["-e",
+    _ = try? shell("/usr/bin/osascript", arguments: ["-e",
         "display notification \"\(message)\" with title \"\(title)\""])
 }
 
@@ -182,6 +182,28 @@ func restoreDesktopFiles(from tempDir: String) throws {
 
 // MARK: - CotEditor Control
 
+/// Exports all CotEditor defaults to a temporary plist file for later restoration.
+///
+/// - Returns: The path to the backup plist file.
+func saveCotEditorDefaults() throws -> String {
+
+    let path = NSTemporaryDirectory() + "coteditor_defaults_backup.plist"
+    try shell("/usr/bin/defaults", arguments: ["export", bundleID, path])
+    return path
+}
+
+
+/// Restores CotEditor defaults from a backup plist file.
+///
+/// - Parameter path: The path to the backup plist file.
+func restoreCotEditorDefaults(from path: String) throws {
+
+    try shell("/usr/bin/defaults", arguments: ["import", bundleID, path])
+    try? FileManager.default.removeItem(atPath: path)
+    print("  CotEditor defaults restored.")
+}
+
+
 /// Sets CotEditor's preferred language.
 ///
 /// - Parameter localeCode: The locale code to set.
@@ -195,6 +217,24 @@ func setCotEditorLanguage(_ localeCode: String) throws {
 func resetCotEditorLanguage() throws {
 
     try shell("/usr/bin/defaults", arguments: ["delete", bundleID, "AppleLanguages"])
+}
+
+
+/// Sets CotEditor's font via `defaults write -data`.
+///
+/// - Parameters:
+///   - name: The font name (PostScript name).
+///   - size: The font size in points.
+func setCotEditorFont(name: String, size: CGFloat) throws {
+
+    guard let font = NSFont(name: name, size: size) else {
+        throw NSError(domain: "Font", code: -1,
+                      userInfo: [NSLocalizedDescriptionKey: "Font '\(name)' not found"])
+    }
+    let data = try NSKeyedArchiver.archivedData(
+        withRootObject: font.fontDescriptor, requiringSecureCoding: true)
+    let hex = data.map { String(format: "%02x", $0) }.joined()
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "font", "-data", hex])
 }
 
 
@@ -292,25 +332,25 @@ func captureScreen(to path: String) throws {
 }
 
 
-/// Captures the Preferences (Appearance pane) screenshot.
+/// Screen layout information for the built-in display in screen coordinates (top-left origin).
+struct ScreenInfo {
+
+    var originX: Int
+    var originY: Int
+    var width: Int
+    var menuBarHeight: Int
+    var availableHeight: Int
+}
+
+
+/// Returns the screen layout information for the built-in display.
 ///
-/// - Parameters:
-///   - language: The language for which to capture.
-///   - outputPath: The path to save the screenshot.
-func capturePreferences(language: Language, outputPath: String) throws {
+/// - Returns: The screen information matching AppleScript's coordinate system.
+func builtInScreenInfo() -> ScreenInfo {
 
-    print("  Capturing Preferences for \(language.folderName)...")
-
-    // Set language and launch CotEditor.
-    try setCotEditorLanguage(language.localeCode)
-    try launchCotEditor()
-
-    // Calculate the macOS-style centered position (top:bottom = 1:2) on the built-in screen.
-    // CGDisplayBounds uses screen coordinates (top-left origin), matching AppleScript.
     let screenBounds = builtInScreenBounds()
     let displayID = builtInDisplayID()
 
-    // Get the actual menu bar height from NSScreen (frame vs visibleFrame).
     let menuBarHeight: Int = {
         for screen in NSScreen.screens {
             if screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? CGDirectDisplayID == displayID {
@@ -320,9 +360,68 @@ func capturePreferences(language: Language, outputPath: String) throws {
         return 25
     }()
 
-    let availableHeight = Int(screenBounds.height) - menuBarHeight
-    let x = Int(screenBounds.origin.x) + (Int(screenBounds.width) - windowWidth) / 2
-    let y = Int(screenBounds.origin.y) + menuBarHeight + (availableHeight - windowHeight) / 3
+    return ScreenInfo(
+        originX: Int(screenBounds.origin.x),
+        originY: Int(screenBounds.origin.y),
+        width: Int(screenBounds.width),
+        menuBarHeight: menuBarHeight,
+        availableHeight: Int(screenBounds.height) - menuBarHeight
+    )
+}
+
+
+/// Generates an AppleScript snippet that resizes and centers window 1 with macOS-style centering (top:bottom = 1:2).
+///
+/// - Parameters:
+///   - width: The desired window width.
+///   - height: The desired window height.
+///   - screen: The screen layout information.
+/// - Returns: An AppleScript snippet to resize and center the window.
+func windowCenteringScript(width: Int, height: Int, screen: ScreenInfo) -> String {
+
+    """
+                    -- Resize the window
+                    set size of window 1 to {\(width), \(height)}
+
+                    -- Center the window based on its actual size
+                    set actualSize to size of window 1
+                    set actualWidth to item 1 of actualSize
+                    set actualHeight to item 2 of actualSize
+                    set position of window 1 to {\(screen.originX) + (\(screen.width) - actualWidth) / 2, \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3}
+    """
+}
+
+
+/// Takes a screenshot and saves it to the specified path.
+///
+/// - Parameter outputPath: The destination file path.
+func takeScreenshot(to outputPath: String) throws {
+
+    let tempFile = NSTemporaryDirectory() + "screenshot_temp.png"
+    try captureScreen(to: tempFile)
+
+    let fileManager = FileManager.default
+    if fileManager.fileExists(atPath: outputPath) {
+        try fileManager.removeItem(atPath: outputPath)
+    }
+    try fileManager.moveItem(atPath: tempFile, toPath: outputPath)
+}
+
+
+/// Captures the Settings (Appearance pane) screenshot.
+///
+/// - Parameters:
+///   - language: The language for which to capture.
+///   - outputPath: The path to save the screenshot.
+func captureSettings(language: Language, outputPath: String) throws {
+
+    print("  Capturing Settings for \(language.folderName)...")
+
+    // Set language and launch CotEditor.
+    try setCotEditorLanguage(language.localeCode)
+    try launchCotEditor()
+
+    let screen = builtInScreenInfo()
 
     // Open Settings window and select Appearance pane.
     try runAppleScript("""
@@ -345,31 +444,93 @@ func capturePreferences(language: Language, outputPath: String) throws {
                 click button 2 of toolbar 1 of window 1
                 delay 0.3
 
-                -- Resize the window
-                set size of window 1 to {\(windowWidth), \(windowHeight)}
-
-                -- Center the window based on its actual size
-                set actualSize to size of window 1
-                set actualWidth to item 1 of actualSize
-                set actualHeight to item 2 of actualSize
-                set position of window 1 to {\(Int(screenBounds.origin.x)) + (\(Int(screenBounds.width)) - actualWidth) / 2, \(Int(screenBounds.origin.y)) + \(menuBarHeight) + (\(availableHeight) - actualHeight) / 3}
+        \(windowCenteringScript(width: windowWidth, height: windowHeight, screen: screen))
                 delay 0.3
             end tell
         end tell
         """)
 
-    // Capture the screenshot.
-    let tempFile = NSTemporaryDirectory() + "screenshot_temp.png"
-    try captureScreen(to: tempFile)
+    try takeScreenshot(to: outputPath)
+    try quitCotEditor()
 
-    // Move to the final destination.
-    let fileManager = FileManager.default
-    if fileManager.fileExists(atPath: outputPath) {
-        try fileManager.removeItem(atPath: outputPath)
-    }
-    try fileManager.moveItem(atPath: tempFile, toPath: outputPath)
+    print("  ✓ Saved: \(outputPath)")
+}
 
-    // Quit CotEditor for the next language.
+
+/// Captures the VerticalOrientation screenshot.
+///
+/// - Parameters:
+///   - language: The language for which to capture.
+///   - demoFile: The path to the demo file to open.
+///   - outputPath: The path to save the screenshot.
+func captureVerticalOrientation(language: Language, demoFile: String, outputPath: String) throws {
+
+    print("  Capturing VerticalOrientation for \(language.folderName)...")
+
+    // Set language and CotEditor preferences.
+    try setCotEditorLanguage(language.localeCode)
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "defaultTheme", "-string", "Resinifictrix"])
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "highlightCurrentLine", "-bool", "false"])
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "showStatusArea", "-bool", "false"])
+    try setCotEditorFont(name: "Klee", size: 13)
+
+    // Force cfprefsd to flush by reading back.
+    _ = try shell("/usr/bin/defaults", arguments: ["read", bundleID, "defaultTheme"])
+    wait(0.3)
+
+    // Open the demo file with CotEditor.
+    try shell("/usr/bin/open", arguments: ["-a", "CotEditor", demoFile])
+
+    // Wait for CotEditor to be ready.
+    try runAppleScript("""
+        tell application "System Events"
+            repeat 30 times
+                if exists process "CotEditor" then exit repeat
+                delay 0.2
+            end repeat
+        end tell
+        """)
+    wait(0.5)
+
+    // Close all other windows and re-open just the demo file.
+    try runAppleScript("""
+        tell application "CotEditor"
+            close every window without saving
+            open POSIX file "\(demoFile)"
+            tell front document
+                set range of selection to {100, 0}
+            end tell
+        end tell
+        """)
+    wait(0.5)
+
+    // Hide all other applications.
+    try runAppleScript("""
+        tell application "System Events"
+            set visible of every process whose name is not "CotEditor" and name is not "Finder" to false
+        end tell
+        """)
+
+    let screen = builtInScreenInfo()
+
+    // Hide toolbar and status bar, then resize and center.
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                set frontmost to true
+                delay 0.3
+
+                -- Hide toolbar (standard macOS shortcut: Cmd+Option+T)
+                keystroke "t" using {command down, option down}
+                delay 0.3
+
+        \(windowCenteringScript(width: 1000, height: 700, screen: screen))
+                delay 0.3
+            end tell
+        end tell
+        """)
+
+    try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
     print("  ✓ Saved: \(outputPath)")
@@ -425,6 +586,7 @@ print("")
 
 print("Preparing...")
 var tempDesktopDir: String?
+var defaultsBackupPath: String?
 
 // Ensure cleanup runs on exit.
 func cleanup() {
@@ -432,12 +594,22 @@ func cleanup() {
     print("")
     print("Cleaning up...")
 
-    // Reset CotEditor language.
-    do {
-        try resetCotEditorLanguage()
-        print("  CotEditor language reset.")
-    } catch {
-        print("  Warning: Could not reset CotEditor language: \(error.localizedDescription)")
+    // Restore CotEditor defaults.
+    if let defaultsBackupPath {
+        do {
+            try restoreCotEditorDefaults(from: defaultsBackupPath)
+        } catch {
+            print("  Warning: Could not restore CotEditor defaults: \(error.localizedDescription)")
+            print("  Backup is at: \(defaultsBackupPath)")
+        }
+    } else {
+        // At least reset the language override.
+        do {
+            try resetCotEditorLanguage()
+            print("  CotEditor language reset.")
+        } catch {
+            print("  Warning: Could not reset CotEditor language: \(error.localizedDescription)")
+        }
     }
 
     // Restore desktop files.
@@ -459,7 +631,13 @@ signal(SIGINT) { _ in
     exit(1)
 }
 
+let demoFile = screenshotsDir + "/_demo files/銀河鉄道の夜.md"
+
 do {
+    // Save CotEditor defaults before any modifications.
+    print("Saving CotEditor defaults...")
+    defaultsBackupPath = try saveCotEditorDefaults()
+
     // Hide desktop files.
     print("Hiding desktop files...")
     tempDesktopDir = try hideDesktopFiles()
@@ -482,8 +660,8 @@ do {
             continue
         }
 
-        let outputPath = outputDir + "/Settings@2x.png"
-        try capturePreferences(language: language, outputPath: outputPath)
+        try captureSettings(language: language, outputPath: outputDir + "/Settings@2x.png")
+        try captureVerticalOrientation(language: language, demoFile: demoFile, outputPath: outputDir + "/VerticalOrientation@2x.png")
     }
 
     print("")
