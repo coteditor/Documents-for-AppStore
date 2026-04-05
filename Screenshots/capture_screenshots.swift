@@ -824,6 +824,118 @@ func captureDark(language: Language, demoFileFront: String, demoFileBack: String
 
 // MARK: - Main
 
+/// Captures the Features screenshot showing the project directory with sidebar and inspector.
+///
+/// - Parameters:
+///   - language: The language for which to capture.
+///   - projectDir: The path to the CotEditor project directory.
+///   - outputPath: The path to save the screenshot.
+func captureFeatures(language: Language, projectDir: String, outputPath: String) throws {
+
+    print("  Capturing Features...")
+
+    // Set defaults.
+    try setCotEditorLanguage(language.localeCode)
+    try setCotEditorDefault("defaultTheme", type: "-string", value: "Anura")
+    try setCotEditorDefault("appearance", type: "-int", value: "0")
+    try setCotEditorDefault("showStatusArea", type: "-bool", value: "true")
+    try setCotEditorDefault("selectedInspectorPaneIndex", type: "-int", value: "0")
+    try setCotEditorFont(name: "Menlo", size: 13)
+
+    // Ensure toolbar is visible for both document types.
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "NSToolbar Configuration Document",
+        "-dict-add", "TB Is Shown", "-bool", "true"])
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "NSToolbar Configuration DirectoryDocument",
+        "-dict-add", "TB Is Shown", "-bool", "true"])
+
+    try flushCotEditorDefaults()
+
+    // Open the project directory.
+    try shell("/usr/bin/open", arguments: ["-a", "CotEditor", projectDir])
+
+    // Wait for CotEditor to be ready.
+    try runAppleScript("""
+        tell application "System Events"
+            repeat 30 times
+                if exists process "CotEditor" then exit repeat
+                delay 0.2
+            end repeat
+        end tell
+        """)
+    wait(0.5)
+
+    // Close other windows and re-open the project directory.
+    try runAppleScript("""
+        tell application "CotEditor"
+            close every window without saving
+            open POSIX file "\(projectDir)"
+        end tell
+        """)
+    wait(0.5)
+
+    // Hide all other applications.
+    try runAppleScript("""
+        tell application "System Events"
+            set visible of every process whose name is not "CotEditor" and name is not "Finder" to false
+        end tell
+        """)
+
+    let screen = builtInScreenInfo()
+
+    // Resize, select README.md, open inspector, then configure.
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                set frontmost to true
+                delay 0.3
+
+        \(windowCenteringScript(width: 1060, height: 780, screen: screen))
+                delay 0.3
+
+                -- Focus the sidebar (Ctrl+Cmd+S) and select README.md
+                keystroke "s" using {control down, command down}
+                delay 0.3
+                keystroke "R"
+                delay 0.5
+            end tell
+        end tell
+        """)
+
+    // Select character 630 with length 1 and open inspector.
+    try runAppleScript("""
+        tell application "CotEditor"
+            tell front document
+                set range of selection to {630, 1}
+            end tell
+        end tell
+        """)
+    wait(0.3)
+
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                -- Re-open sidebar in case it was closed
+                keystroke "s" using {control down, command down}
+                delay 0.3
+
+                -- Focus the editor (Ctrl+`)
+                keystroke "`" using control down
+                delay 0.3
+
+                -- Cmd+Option+I
+                keystroke "i" using {command down, option down}
+                delay 1
+            end tell
+        end tell
+        """)
+
+    try takeScreenshot(to: outputPath)
+    try quitCotEditor()
+
+    print("  ✓ Saved: \(outputPath)")
+}
+
+
 let scriptDir = URL(fileURLWithPath: CommandLine.arguments[0]).deletingLastPathComponent().path
 let screenshotsDir: String
 if scriptDir.isEmpty || scriptDir == "." {
@@ -924,6 +1036,7 @@ signal(SIGINT) { _ in
 let demoFileVertical = screenshotsDir + "/_demo files/銀河鉄道の夜.md"
 let demoFileEditor = screenshotsDir + "/_demo files/editor.svg"
 let demoFileSvg = screenshotsDir + "/_demo files/svg.svg"
+let projectDir = screenshotsDir + "/../../CotEditor"
 
 do {
     // Save CotEditor defaults before any modifications.
@@ -956,6 +1069,7 @@ do {
         try captureVerticalOrientation(language: language, demoFile: demoFileVertical, outputPath: outputDir + "/VerticalOrientation@2x.png")
         try captureEditor(language: language, demoFile: demoFileEditor, outputPath: outputDir + "/Editor@2x.png")
         try captureDark(language: language, demoFileFront: demoFileEditor, demoFileBack: demoFileSvg, outputPath: outputDir + "/Dark@2x.png")
+        try captureFeatures(language: language, projectDir: projectDir, outputPath: outputDir + "/Features@2x.png")
     }
 
     print("")
