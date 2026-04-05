@@ -730,6 +730,98 @@ func captureEditor(language: Language, demoFile: String, outputPath: String) thr
 }
 
 
+/// Captures the Dark mode screenshot with two overlapping document windows.
+///
+/// - Parameters:
+///   - language: The language for which to capture.
+///   - demoFileFront: The path to the front (editor.svg) demo file.
+///   - demoFileBack: The path to the back (svg.svg) demo file.
+///   - outputPath: The path to save the screenshot.
+func captureDark(language: Language, demoFileFront: String, demoFileBack: String, outputPath: String) throws {
+
+    print("  Capturing Dark...")
+
+    // Set defaults.
+    try setCotEditorLanguage(language.localeCode)
+    try setCotEditorDefault("defaultTheme", type: "-string", value: "Anura (Dark)")
+    try setCotEditorDefault("appearance", type: "-int", value: "2")
+    try setCotEditorDefault("windowAlpha", type: "-float", value: "0.9")
+    try setCotEditorDefault("showStatusArea", type: "-bool", value: "true")
+    try setCotEditorFont(name: "Menlo", size: 13)
+
+    // Ensure toolbar is visible.
+    try shell("/usr/bin/defaults", arguments: ["write", bundleID, "NSToolbar Configuration Document",
+        "-dict-add", "TB Is Shown", "-bool", "true"])
+
+    try flushCotEditorDefaults()
+
+    // Open the back window (svg.svg) first, then the front window (editor.svg).
+    try shell("/usr/bin/open", arguments: ["-a", "CotEditor", demoFileBack])
+
+    // Wait for CotEditor to be ready.
+    try runAppleScript("""
+        tell application "System Events"
+            repeat 30 times
+                if exists process "CotEditor" then exit repeat
+                delay 0.2
+            end repeat
+        end tell
+        """)
+    wait(0.5)
+
+    // Close all windows, then open files in order: back first, then front.
+    try runAppleScript("""
+        tell application "CotEditor"
+            close every window without saving
+            open POSIX file "\(demoFileBack)"
+        end tell
+        """)
+    wait(0.5)
+
+    try runAppleScript("""
+        tell application "CotEditor"
+            open POSIX file "\(demoFileFront)"
+        end tell
+        """)
+    wait(0.5)
+
+    // Hide all other applications.
+    try runAppleScript("""
+        tell application "System Events"
+            set visible of every process whose name is not "CotEditor" and name is not "Finder" to false
+        end tell
+        """)
+
+    let screen = builtInScreenInfo()
+
+    // editor.svg (front, window 1) at x=280, svg.svg (back, window 2) at x=280+210=490, y+40.
+    try runAppleScript("""
+        tell application "System Events"
+            tell process "CotEditor"
+                set frontmost to true
+                delay 0.3
+
+                -- Resize and position the front window (editor.svg = window 1)
+        \(windowPositioningScript(width: 700, height: 780, x: 280, screen: screen))
+                delay 0.3
+
+                -- Resize and position the back window (svg.svg = window 2)
+                set size of window 2 to {700, 780}
+                set actualSize to size of window 2
+                set actualHeight to item 2 of actualSize
+                set position of window 2 to {\(screen.originX + 490), \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3 + 40}
+                delay 0.3
+            end tell
+        end tell
+        """)
+
+    try takeScreenshot(to: outputPath)
+    try quitCotEditor()
+
+    print("  ✓ Saved: \(outputPath)")
+}
+
+
 // MARK: - Main
 
 let scriptDir = URL(fileURLWithPath: CommandLine.arguments[0]).deletingLastPathComponent().path
@@ -831,6 +923,7 @@ signal(SIGINT) { _ in
 
 let demoFileVertical = screenshotsDir + "/_demo files/銀河鉄道の夜.md"
 let demoFileEditor = screenshotsDir + "/_demo files/editor.svg"
+let demoFileSvg = screenshotsDir + "/_demo files/svg.svg"
 
 do {
     // Save CotEditor defaults before any modifications.
@@ -862,6 +955,7 @@ do {
         try captureSettings(language: language, outputPath: outputDir + "/Settings@2x.png")
         try captureVerticalOrientation(language: language, demoFile: demoFileVertical, outputPath: outputDir + "/VerticalOrientation@2x.png")
         try captureEditor(language: language, demoFile: demoFileEditor, outputPath: outputDir + "/Editor@2x.png")
+        try captureDark(language: language, demoFileFront: demoFileEditor, demoFileBack: demoFileSvg, outputPath: outputDir + "/Dark@2x.png")
     }
 
     print("")
