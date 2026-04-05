@@ -108,6 +108,16 @@ func wait(_ seconds: Double) {
 }
 
 
+/// Prints a save confirmation with a path relative to the screenshots directory.
+///
+/// - Parameter path: The absolute path to the saved file.
+func printSaved(_ path: String) {
+
+    let relative = path.hasPrefix(screenshotsDir) ? String(path.dropFirst(screenshotsDir.count + 1)) : path
+    print("  \u{1B}[32m✓\u{1B}[0m Saved: \(relative)")
+}
+
+
 /// Sends a macOS notification via Notification Center.
 ///
 /// - Parameters:
@@ -580,7 +590,7 @@ func captureSettings(language: Language, outputPath: String) throws {
     try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
-    print("  ✓ Saved: \(outputPath)")
+    printSaved(outputPath)
 }
 
 
@@ -631,7 +641,7 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
     try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
-    print("  ✓ Saved: \(outputPath)")
+    printSaved(outputPath)
 }
 
 
@@ -708,7 +718,7 @@ func captureEditor(language: Language, demoFile: String, outputPath: String) thr
     try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
-    print("  ✓ Saved: \(outputPath)")
+    printSaved(outputPath)
 }
 
 
@@ -760,7 +770,7 @@ func captureDark(language: Language, demoFileFront: String, demoFileBack: String
     try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
-    print("  ✓ Saved: \(outputPath)")
+    printSaved(outputPath)
 }
 
 
@@ -838,7 +848,7 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
     try takeScreenshot(to: outputPath)
     try quitCotEditor()
 
-    print("  ✓ Saved: \(outputPath)")
+    printSaved(outputPath)
 }
 
 
@@ -883,11 +893,19 @@ if args.isEmpty {
     }
 }
 
-print("=== CotEditor App Store Screenshot Capture ===")
-print("Screenshots directory: \(screenshotsDir)")
-print("Target languages: \(targetLanguages.map(\.folderName).joined(separator: ", "))")
-print("")
+// Confirmation prompt.
+print("""
+    \u{1B}[1;91m[Caution]\u{1B}[0m This script is intended for maintainers only; contributors do not need to run it. Running this script will take over macOS operations and may break system or CotEditor settings.
+    Do you really want to proceed?
+    """)
+print("Type YES to continue: ", terminator: "")
+guard readLine()?.trimmingCharacters(in: .whitespaces) == "YES" else {
+    print("Aborted.")
+    exit(0)
+}
 
+let startTime = Date()
+print("")
 print("Preparing...")
 var tempDesktopDir: String?
 var defaultsBackupPath: String?
@@ -970,13 +988,19 @@ do {
     print("")
     print("All screenshots captured successfully!")
     cleanup()
+
+    let elapsed = Int(Date().timeIntervalSince(startTime))
+    print("  Elapsed time: \(elapsed / 60)m \(elapsed % 60)s")
     sendNotification(title: "Screenshot Capture Complete",
-                     message: "\(targetLanguages.count) language(s) captured successfully.")
+                     message: "\(targetLanguages.count) language(s) captured in \(elapsed / 60)m \(elapsed % 60)s.")
 
 } catch {
     print("")
     print("Error: \(error.localizedDescription)")
     cleanup()
+
+    let elapsed = Int(Date().timeIntervalSince(startTime))
+    print("  Elapsed time: \(elapsed / 60)m \(elapsed % 60)s")
     sendNotification(title: "Screenshot Capture Failed",
                      message: error.localizedDescription)
 }
