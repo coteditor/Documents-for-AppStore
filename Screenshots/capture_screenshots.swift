@@ -233,7 +233,7 @@ func resetCotEditorLanguage() throws {
 
 /// Writes multiple CotEditor defaults values at once.
 ///
-/// - Parameter defaults: A dictionary of key-value pairs with type flags (e.g. `["key": ("-bool", "true")]`).
+/// - Parameter defaults: An array of key-type-value tuples (e.g. `[(key: "foo", type: "-bool", value: "true")]`).
 func setCotEditorDefaults(_ defaults: [(key: String, type: String, value: String)]) throws {
 
     for d in defaults {
@@ -449,20 +449,22 @@ func builtInScreenInfo() -> ScreenInfo {
 /// - Returns: An AppleScript snippet to resize and position the window.
 func windowLayoutScript(window: String = "window 1", width: Int, height: Int, x: Int? = nil, screen: ScreenInfo) -> String {
 
-    let xExpr: String
     if let x {
-        xExpr = "\(screen.originX + x)"
+        return """
+                        set size of \(window) to {\(width), \(height)}
+                        set actualSize to size of \(window)
+                        set actualHeight to item 2 of actualSize
+                        set position of \(window) to {\(screen.originX + x), \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3}
+        """
     } else {
-        xExpr = "\(screen.originX) + (\(screen.width) - actualWidth) / 2"
+        return """
+                        set size of \(window) to {\(width), \(height)}
+                        set actualSize to size of \(window)
+                        set actualWidth to item 1 of actualSize
+                        set actualHeight to item 2 of actualSize
+                        set position of \(window) to {\(screen.originX) + (\(screen.width) - actualWidth) / 2, \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3}
+        """
     }
-
-    return """
-                    set size of \(window) to {\(width), \(height)}
-                    set actualSize to size of \(window)
-                    set actualWidth to item 1 of actualSize
-                    set actualHeight to item 2 of actualSize
-                    set position of \(window) to {\(xExpr), \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3}
-    """
 }
 
 
@@ -524,9 +526,15 @@ func overlayMenuBar(screenshotPath: String) throws {
         ctx.draw(strip, in: CGRect(x: x, y: tileY, width: 1, height: overlayH))
     }
 
-    guard let resultCG = ctx.makeImage() else { return }
+    guard let resultCG = ctx.makeImage() else {
+        print("    Warning: Could not create result image")
+        return
+    }
     let resultRep = NSBitmapImageRep(cgImage: resultCG)
-    guard let pngData = resultRep.representation(using: .png, properties: [:]) else { return }
+    guard let pngData = resultRep.representation(using: .png, properties: [:]) else {
+        print("    Warning: Could not encode PNG")
+        return
+    }
     try pngData.write(to: screenshotURL)
 }
 
