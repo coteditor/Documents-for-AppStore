@@ -46,6 +46,11 @@ let languages: [Language] = [
 /// The CotEditor bundle identifier.
 let bundleID = "com.coteditor.CotEditor"
 
+/// The virtual screen size for App Store screenshots (logical pixels).
+/// Mac App Store requires 1440x900 (@2x = 2880x1800).
+let virtualScreenWidth = 1440
+let virtualScreenHeight = 900
+
 
 // MARK: - Helper Functions
 
@@ -361,13 +366,13 @@ func builtInScreenBounds() -> CGRect {
 }
 
 
-/// Captures a full-screen screenshot of the built-in display to the specified path.
+/// Captures the virtual screen area (1440x900) of the built-in display to the specified path.
 ///
 /// - Parameter path: The output file path.
 func captureScreen(to path: String) throws {
 
     let bounds = builtInScreenBounds()
-    let rect = "\(Int(bounds.origin.x)),\(Int(bounds.origin.y)),\(Int(bounds.width)),\(Int(bounds.height))"
+    let rect = "\(Int(bounds.origin.x)),\(Int(bounds.origin.y)),\(virtualScreenWidth),\(virtualScreenHeight)"
     try shell("/usr/sbin/screencapture", arguments: ["-x", "-R", rect, path])
 }
 
@@ -383,29 +388,40 @@ struct ScreenInfo {
 }
 
 
-/// Returns the screen layout information for the built-in display.
+/// Returns the actual menu bar height of the built-in display.
+///
+/// - Returns: The menu bar height in logical pixels.
+func builtInMenuBarHeight() -> Int {
+
+    let displayID = builtInDisplayID()
+
+    for screen in NSScreen.screens {
+        if screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? CGDirectDisplayID == displayID {
+            return Int(screen.frame.maxY - screen.visibleFrame.maxY)
+        }
+    }
+
+    return 25
+}
+
+
+/// Returns the virtual screen layout information for the built-in display.
+///
+/// Window positioning and centering are calculated based on the virtual 1440x900 area,
+/// while the origin and menu bar height come from the actual display.
 ///
 /// - Returns: The screen information matching AppleScript's coordinate system.
 func builtInScreenInfo() -> ScreenInfo {
 
     let screenBounds = builtInScreenBounds()
-    let displayID = builtInDisplayID()
-
-    let menuBarHeight: Int = {
-        for screen in NSScreen.screens {
-            if screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? CGDirectDisplayID == displayID {
-                return Int(screen.frame.maxY - screen.visibleFrame.maxY)
-            }
-        }
-        return 25
-    }()
+    let menuBarHeight = builtInMenuBarHeight()
 
     return ScreenInfo(
         originX: Int(screenBounds.origin.x),
         originY: Int(screenBounds.origin.y),
-        width: Int(screenBounds.width),
+        width: virtualScreenWidth,
         menuBarHeight: menuBarHeight,
-        availableHeight: Int(screenBounds.height) - menuBarHeight
+        availableHeight: virtualScreenHeight - menuBarHeight
     )
 }
 
@@ -448,13 +464,78 @@ func windowPositioningScript(width: Int, height: Int, x: Int, screen: ScreenInfo
 }
 
 
-/// Takes a screenshot and saves it to the specified path.
+/// Hides the system status items in the menu bar by overwriting the top-right area
+/// with a clean strip sampled from the screenshot's own menu bar gap.
+///
+/// - Parameter screenshotPath: The path to the screenshot to modify.
+func overlayMenuBar(screenshotPath: String) throws {
+
+    let screenshotURL = URL(fileURLWithPath: screenshotPath)
+
+    guard let screenshotData = try? Data(contentsOf: screenshotURL),
+          let screenshotRep = NSBitmapImageRep(data: screenshotData),
+          let screenshotCG = screenshotRep.cgImage else {
+        print("    Warning: Could not load screenshot for menu bar overlay")
+        return
+    }
+
+    let width = screenshotCG.width
+    let height = screenshotCG.height
+    let scale = width / virtualScreenWidth
+    let overlayH = 40 * scale
+    // Sample a 1px-wide column from the left edge of the menu bar,
+    // where no window shadows reach.
+    let sampleX = 0
+
+    // Crop a 1px-wide strip from the menu bar area of the screenshot itself.
+    let stripRect = CGRect(x: sampleX, y: 0, width: 1, height: overlayH)
+    guard let strip = screenshotCG.cropping(to: stripRect) else {
+        print("    Warning: Could not crop menu bar strip")
+        return
+    }
+
+    // Create a CGContext and draw the screenshot.
+    guard let ctx = CGContext(
+        data: nil, width: width, height: height,
+        bitsPerComponent: 8, bytesPerRow: width * 4,
+        space: CGColorSpaceCreateDeviceRGB(),
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+    ) else {
+        print("    Warning: Could not create CGContext for overlay")
+        return
+    }
+    ctx.draw(screenshotCG, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+    // Tile the strip over the rightmost 400 logical px of the menu bar.
+    let tileY = height - overlayH
+    let tileStartX = width - 400 * scale
+    for x in tileStartX..<width {
+        ctx.draw(strip, in: CGRect(x: x, y: tileY, width: 1, height: overlayH))
+    }
+
+    guard let resultCG = ctx.makeImage() else {
+        print("    Warning: Could not create result image")
+        return
+    }
+    let resultRep = NSBitmapImageRep(cgImage: resultCG)
+    guard let pngData = resultRep.representation(using: .png, properties: [:]) else {
+        print("    Warning: Could not encode PNG")
+        return
+    }
+    try pngData.write(to: screenshotURL)
+}
+
+
+/// Takes a screenshot, overlays the menu bar, and saves it to the specified path.
 ///
 /// - Parameter outputPath: The destination file path.
 func takeScreenshot(to outputPath: String) throws {
 
     let tempFile = NSTemporaryDirectory() + "screenshot_temp.png"
     try captureScreen(to: tempFile)
+
+    // Hide system status items in the menu bar.
+    try overlayMenuBar(screenshotPath: tempFile)
 
     let fileManager = FileManager.default
     if fileManager.fileExists(atPath: outputPath) {
@@ -608,7 +689,7 @@ func captureEditor(language: Language, demoFile: String, outputPath: String) thr
                 keystroke "i" using command down
                 delay 0.3
 
-        \(windowPositioningScript(width: 700, height: 800, x: 280, screen: screen))
+        \(windowPositioningScript(width: 700, height: 780, x: 280, screen: screen))
                 delay 0.3
             end tell
         end tell
