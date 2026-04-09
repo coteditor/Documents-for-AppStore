@@ -939,19 +939,15 @@ func cleanup() {
 
     do { try quitCotEditor() } catch {}
 
+    // Always remove the language override first.
+    do { try resetCotEditorLanguage() } catch {}
+
     if let defaultsBackupPath {
         do {
             try restoreCotEditorDefaults(from: defaultsBackupPath)
         } catch {
             print("  Warning: Could not restore CotEditor defaults: \(error.localizedDescription)")
             print("  Backup is at: \(defaultsBackupPath)")
-        }
-    } else {
-        do {
-            try resetCotEditorLanguage()
-            print("  CotEditor language reset.")
-        } catch {
-            print("  Warning: Could not reset CotEditor language: \(error.localizedDescription)")
         }
     }
 
