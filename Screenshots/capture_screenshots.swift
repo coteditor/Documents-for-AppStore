@@ -315,13 +315,6 @@ func launchCotEditor(files: [String] = [], setupDocument: String? = nil) throws 
 
         """
     }
-    if let setupDocument {
-        openScript += """
-                tell front document
-                    \(setupDocument)
-                end tell
-        """
-    }
     try runAppleScript("""
         tell application "CotEditor"
             close every window without saving
@@ -329,6 +322,21 @@ func launchCotEditor(files: [String] = [], setupDocument: String? = nil) throws 
         end tell
         """)
     wait(0.5)
+
+    // Run setup on the front document (after ensuring it exists).
+    if let setupDocument {
+        try runAppleScript("""
+            tell application "CotEditor"
+                repeat 30 times
+                    if (count of documents) > 0 then exit repeat
+                    delay 0.2
+                end repeat
+                tell front document
+                    \(setupDocument)
+                end tell
+            end tell
+            """)
+    }
 
     // Hide all other applications.
     try runAppleScript("""
@@ -618,6 +626,7 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
         (key: "highlightCurrentLine", type: "-bool", value: "false"),
         (key: "showStatusArea", type: "-bool", value: "false"),
         (key: "selectedInspectorPaneIndex", type: "-int", value: "1"),
+        (key: "windowAlpha", type: "-float", value: "1.0"),
     ])
     try setCotEditorFont(name: "Klee", size: 13)
     try flushCotEditorDefaults()
@@ -668,6 +677,7 @@ func captureEditor(language: Language, demoFile: String, outputPath: String) thr
         (key: "defaultTheme", type: "-string", value: "Anura"),
         (key: "showStatusArea", type: "-bool", value: "true"),
         (key: "findUsesRegularExpression", type: "-bool", value: "true"),
+        (key: "windowAlpha", type: "-float", value: "1.0"),
     ])
     try setCotEditorFont(name: "Menlo", size: 13)
     try setCotEditorToolbarVisible("Document", visible: true)
@@ -711,7 +721,7 @@ func captureEditor(language: Language, demoFile: String, outputPath: String) thr
                 keystroke "f" using command down
                 delay 0.8
 
-                set position of window 1 to {\(screen.originX + 780), \(screen.originY + 400)}
+                set position of window 1 to {\(screen.originX + 780), \(screen.originY + 380)}
                 delay 0.3
 
                 key code 124
@@ -796,6 +806,7 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
     try setCotEditorDefaults([
         (key: "defaultTheme", type: "-string", value: "Anura"),
         (key: "appearance", type: "-int", value: "0"),
+        (key: "windowAlpha", type: "-float", value: "1.0"),
         (key: "showStatusArea", type: "-bool", value: "true"),
         (key: "selectedInspectorPaneIndex", type: "-int", value: "0"),
     ])
@@ -818,18 +829,21 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
         \(windowLayoutScript(width: 1060, height: 780, screen: screen))
                 delay 0.3
 
-                -- Focus the sidebar (Ctrl+Cmd+S) and type-select README.md
-                keystroke "s" using {control down, command down}
-                delay 0.3
+                -- Type-select README.md in the sidebar
+                -- (Sidebar should already be visible and focused in a directory window)
                 keystroke "R"
                 delay 0.5
             end tell
         end tell
         """)
 
-    // Select character at position 630 (length 1).
+    // Wait for the document to be ready, then set selection.
     try runAppleScript("""
         tell application "CotEditor"
+            repeat 30 times
+                if (count of documents) > 0 then exit repeat
+                delay 0.2
+            end repeat
             tell front document
                 set range of selection to {630, 1}
             end tell
