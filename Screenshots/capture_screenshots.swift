@@ -24,7 +24,6 @@ struct Language {
 
 /// All supported languages with their App Store folder names and locale codes.
 let languages: [Language] = [
-    Language(folderName: "Bulgarian", localeCode: "bg"),
     Language(folderName: "Chinese (Simplified)", localeCode: "zh-Hans"),
     Language(folderName: "Chinese (Traditional)", localeCode: "zh-Hant"),
     Language(folderName: "Czech", localeCode: "cs"),
