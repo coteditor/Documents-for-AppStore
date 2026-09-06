@@ -850,11 +850,13 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
         """)
     wait(0.3)
 
-    // Re-open sidebar, focus editor, then show inspector.
+    // Ensure the sidebar is shown, focus editor, then show inspector.
     try runAppleScript("""
         tell application "System Events"
             tell process "CotEditor"
-                keystroke "s" using {control down, command down}
+                -- Show the File Browser pane (Ctrl+Cmd+1) instead of toggling the sidebar (Ctrl+Cmd+S),
+                -- because the sidebar is already open for a directory document and toggling would close it.
+                keystroke "1" using {control down, command down}
                 delay 0.3
 
                 keystroke "`" using control down
