@@ -289,11 +289,12 @@ func flushCotEditorDefaults() throws {
 func launchCotEditor(files: [String] = [], setupDocument: String? = nil) throws {
 
     // Launch CotEditor (with the first file if any).
-    if let first = files.first {
-        try shell("/usr/bin/open", arguments: ["-a", "CotEditor", first])
+    let arguments = if let first = files.first {
+        ["-a", "CotEditor", first]
     } else {
-        try shell("/usr/bin/open", arguments: ["-a", "CotEditor"])
+        ["-a", "CotEditor"]
     }
+    try shell("/usr/bin/open", arguments: arguments)
 
     // Wait for the application to be fully ready.
     try runAppleScript("""
@@ -457,14 +458,14 @@ func builtInScreenInfo() -> ScreenInfo {
 func windowLayoutScript(window: String = "window 1", width: Int, height: Int, x: Int? = nil, screen: ScreenInfo) -> String {
 
     if let x {
-        return """
+        """
                         set size of \(window) to {\(width), \(height)}
                         set actualSize to size of \(window)
                         set actualHeight to item 2 of actualSize
                         set position of \(window) to {\(screen.originX + x), \(screen.originY) + \(screen.menuBarHeight) + (\(screen.availableHeight) - actualHeight) / 3}
         """
     } else {
-        return """
+        """
                         set size of \(window) to {\(width), \(height)}
                         set actualSize to size of \(window)
                         set actualWidth to item 1 of actualSize
@@ -878,11 +879,10 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
 // MARK: - Main
 
 let scriptDir = URL(fileURLWithPath: CommandLine.arguments[0]).deletingLastPathComponent().path
-let screenshotsDir: String
-if scriptDir.isEmpty || scriptDir == "." {
-    screenshotsDir = FileManager.default.currentDirectoryPath
+let screenshotsDir: String = if scriptDir.isEmpty || scriptDir == "." {
+    FileManager.default.currentDirectoryPath
 } else {
-    screenshotsDir = scriptDir
+    scriptDir
 }
 let backgroundPath = screenshotsDir + "/background@2x.png"
 
