@@ -40,6 +40,7 @@ let languages: [Language] = [
     Language(folderName: "Russian", localeCode: "ru"),
     Language(folderName: "Spanish", localeCode: "es"),
     Language(folderName: "Turkish", localeCode: "tr"),
+    Language(folderName: "Ukrainian", localeCode: "uk"),
 ]
 
 /// The CotEditor bundle identifier.
