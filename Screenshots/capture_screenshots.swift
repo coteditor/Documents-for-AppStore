@@ -32,6 +32,7 @@ let languages: [Language] = [
     Language(folderName: "English (UK)", localeCode: "en-GB"),
     Language(folderName: "French", localeCode: "fr"),
     Language(folderName: "German", localeCode: "de"),
+    Language(folderName: "Hindi", localeCode: "hi"),
     Language(folderName: "Italian", localeCode: "it"),
     Language(folderName: "Japanese", localeCode: "ja"),
     Language(folderName: "Korean", localeCode: "ko"),
