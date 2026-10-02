@@ -623,12 +623,15 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
     try setCotEditorLanguage(language.localeCode)
     try setCotEditorDefaults([
         (key: "defaultTheme", type: "-string", value: "Resinifictrix"),
+        (key: "windowWidth", type: "-float", value: "1000"),
+        (key: "windowHeight", type: "-float", value: "700"),
         (key: "highlightCurrentLine", type: "-bool", value: "false"),
         (key: "showStatusArea", type: "-bool", value: "false"),
         (key: "selectedInspectorPaneIndex", type: "-int", value: "1"),
         (key: "windowAlpha", type: "-float", value: "1.0"),
     ])
     try setCotEditorFont(name: "Klee", size: 13)
+    try setCotEditorToolbarVisible("Document", visible: false)
     try flushCotEditorDefaults()
 
     try launchCotEditor(files: [demoFile], setupDocument: "set range of selection to {100, 0}")
@@ -641,15 +644,14 @@ func captureVerticalOrientation(language: Language, demoFile: String, outputPath
                 set frontmost to true
                 delay 0.3
 
-                -- Hide toolbar
-                keystroke "t" using {command down, option down}
-                delay 0.3
+                -- Keep the document reference before the inspector can open a transient window.
+                set documentWindow to first window whose subrole is "AXStandardWindow"
 
                 -- Show inspector
                 keystroke "i" using command down
                 delay 0.3
 
-        \(windowLayoutScript(width: 1000, height: 700, screen: screen))
+        \(windowLayoutScript(window: "documentWindow", width: 1000, height: 700, screen: screen))
                 delay 0.3
             end tell
         end tell
@@ -675,6 +677,8 @@ func captureEditor(language: Language, demoFile: String, outputPath: String) thr
     try setCotEditorLanguage(language.localeCode)
     try setCotEditorDefaults([
         (key: "defaultTheme", type: "-string", value: "Anura"),
+        (key: "windowWidth", type: "-float", value: "700"),
+        (key: "windowHeight", type: "-float", value: "780"),
         (key: "showStatusArea", type: "-bool", value: "true"),
         (key: "findUsesRegularExpression", type: "-bool", value: "true"),
         (key: "windowAlpha", type: "-float", value: "1.0"),
@@ -754,6 +758,8 @@ func captureDark(language: Language, demoFileFront: String, demoFileBack: String
     try setCotEditorLanguage(language.localeCode)
     try setCotEditorDefaults([
         (key: "defaultTheme", type: "-string", value: "Anura (Dark)"),
+        (key: "windowWidth", type: "-float", value: "700"),
+        (key: "windowHeight", type: "-float", value: "780"),
         (key: "appearance", type: "-int", value: "2"),
         (key: "windowAlpha", type: "-float", value: "0.9"),
         (key: "showStatusArea", type: "-bool", value: "true"),
@@ -805,6 +811,8 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
     try setCotEditorLanguage(language.localeCode)
     try setCotEditorDefaults([
         (key: "defaultTheme", type: "-string", value: "Anura"),
+        (key: "windowWidth", type: "-float", value: "1060"),
+        (key: "windowHeight", type: "-float", value: "780"),
         (key: "appearance", type: "-int", value: "0"),
         (key: "windowAlpha", type: "-float", value: "1.0"),
         (key: "showStatusArea", type: "-bool", value: "true"),
@@ -845,7 +853,7 @@ func captureFeatures(language: Language, projectDir: String, outputPath: String)
                 delay 0.2
             end repeat
             tell front document
-                set range of selection to {630, 1}
+                set range of selection to {549, 1}
             end tell
         end tell
         """)
