@@ -1,0 +1,1 @@
+szövegszerkesztő, kód, szintaxis, programozás, markdown, reguláris kifejezés, regex, plain text

@@ -1,0 +1,35 @@
+A CotEditor könnyű szerkesztő egyszerű szöveghez: forráskódhoz, jegyzetekhez, Markdownhoz, webes tartalmakhoz és sok máshoz. Letisztult, rendezett felülete egyszerűvé és kényelmessé teszi a mindennapi szerkesztést, a nagy tudású eszközei pedig a bonyolultabb munkában is segítenek, ha szükség van rájuk.
+
+
+Macre készült
+
+A CotEditor kizárólag macOS-re készült, és a használata az első perctől ismerős. Követi a rendszer megszokott működését, zökkenőmentesen együttműködik az olyan funkciókkal, mint a sötét mód, a verziók, az iCloud és a VoiceOver, a beállításai pedig a szabványos Beállítások ablakban vannak, ott, ahol a Mac-felhasználók keresik őket.
+
+Gyors, letisztult és bírja a komoly munkát
+
+A CotEditor gyorsan elindul, egyszerű, jól átgondolt felülete pedig segít a munkára összpontosítani. A sok népszerű nyelvhez beépített szintaxiskiemelés és a szintaxison alapuló vázlatmenü egy pillantás alatt átláthatóvá teszi a dokumentumok szerkezetét. Ha a munka többet kíván, a CotEditor erre is kész: hatékony keresést és cserét, pontos szerkesztőeszközöket és szkriptelést kínál, a részleteket pedig a saját munkamódjához igazíthatja.
+
+Figyel a szöveg részleteire
+
+A CotEditor figyel azokra a részletekre, amelyektől az egyszerű szöveg szerkesztése megbízható lesz, a szövegkódolástól és a sorvégektől a Unicode-normalizáláson át a különféle írásrendszerekig. Megmutatja, mi van valójában a dokumentumban: láthatóvá teszi a láthatatlan karaktereket, figyelmeztet a nem egységes sorvégekre és a választott kódolásban nem menthető karakterekre, és részletes karaktervizsgálatot kínál. Így a CotEditor különböző írásrendszerekkel és írási szokásokkal is kényelmesen használható.
+
+Fő funkciók
+
+• Szintaxiskiemelés több mint 70 előre beállított nyelvhez
+• Hatékony keresés és csere reguláris kifejezésekkel
+• Karakterek, szavak és sorok folyamatos számlálása
+• Automatikus mentés, választhatóan az eredeti fájl felülírása nélkül
+• A szövegkódolások és a sorvégek gondos kezelése
+• Szintaxison alapuló vázlatmenü
+• Szerkesztés több kurzorral
+• Mappák böngészése az oldalsávban
+• Karaktervizsgáló nagyított karakterképpel és Unicode-adatokkal
+• Különféle írásmódok támogatása, köztük a kínai, japán és koreai (CJK) szöveg, a függőleges írás és a jobbról balra írt szöveg
+• Többféle Unicode-normalizálás
+• Parancssori eszköz
+• Szkriptelés a kedvenc programozási nyelvén
+
+A CotEditor minden funkciója ingyenes. Az appbeli vásárlások nem kötelezőek, a projekt támogatását szolgálják.
+
+Szolgáltatási feltételek: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Adatvédelmi szabályzat: https://coteditor.com/privacy
