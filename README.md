@@ -19,24 +19,31 @@ Screenshots are generated automatically, so localization maintainers do not need
     - `subtitle.txt` (up to 30 characters)
     - `keywords.txt`
     - `description.txt` (up to 4000 characters).
+- `release_notes/<locale>/`: Release notes for the upcoming version.
 - `screenshots/<locale>/`: App Store screenshots, ordered by their numbered filenames corresponding to the order in the store.
 - `scripts/`: The screenshot capture script, background, and demo files.
 
 Directory names use App Store Connect locale codes, such as `en-US`, `de-DE`, and `pt-BR`.
 
-Release notes are maintained in `metadata/default/release_notes.txt` for English and `metadata/ja/release_notes.txt` for Japanese only. Since other languages use the default English version, you don't need to include a `release_notes.txt` file for other languages.
+Release notes are maintained in `release_notes/default/release_notes.txt` for English and `release_notes/ja/release_notes.txt` for Japanese only. Since other languages use the default English version, you don't need to include a `release_notes.txt` file for other languages.
 
 
 ## Upload
 
 Install [fastlane](https://docs.fastlane.tools/) and configure [App Store Connect API authentication](https://docs.fastlane.tools/app-store-connect-api/).
-Prepare an editable macOS version in App Store Connect, then run the following command from the repository root:
+Prepare an editable macOS version in App Store Connect, then run the following command from the repository root to upload the metadata and screenshots:
 
 ```sh
 fastlane deliver --api_key_path /path/to/api-key.json
 ```
 
 To upload only the text, add `--skip_screenshots` to the command.
+
+Release notes are uploaded separately:
+
+```sh
+fastlane deliver --api_key_path /path/to/api-key.json --metadata_path ./release_notes --skip_screenshots
+```
 
 
 ## License

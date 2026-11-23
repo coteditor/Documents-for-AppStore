@@ -3,7 +3,8 @@ platform("osx")
 
 metadata_path("./metadata")
 screenshots_path("./screenshots")
-languages(["fr-FR", "nl-NL"])
+# all languages on the store, including those without localized metadata
+languages(Dir.glob("./screenshots/*/").map { |path| File.basename(path) })
 
 skip_binary_upload(true)
 skip_app_version_update(true)
