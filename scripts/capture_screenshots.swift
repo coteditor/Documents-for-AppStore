@@ -34,6 +34,7 @@ let languages: [Language] = [
     Language(folderName: "French", localeCode: "fr", appStoreLocaleCode: "fr-FR"),
     Language(folderName: "German", localeCode: "de", appStoreLocaleCode: "de-DE"),
     Language(folderName: "Hindi", localeCode: "hi", appStoreLocaleCode: "hi"),
+    Language(folderName: "Hungarian", localeCode: "hu", appStoreLocaleCode: "hu"),
     Language(folderName: "Italian", localeCode: "it", appStoreLocaleCode: "it"),
     Language(folderName: "Japanese", localeCode: "ja", appStoreLocaleCode: "ja"),
     Language(folderName: "Korean", localeCode: "ko", appStoreLocaleCode: "ko"),
